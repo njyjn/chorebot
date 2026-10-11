@@ -23,6 +23,9 @@ const formatDigest = (day: string, due: ChoreView[]) => {
 // sends one digest per day once the alert time has passed. POST ?test=1 sends
 // the digest immediately without recording it, for checking notifications.
 export async function POST(request: Request) {
+  // Only the loop in start.sh, which calls Next directly on loopback, may run
+  // this. Anything arriving through server.js carries a zone header.
+  if (request.headers.get("x-chorebot-zone")) return fail("Not found", 404);
   try {
     const test = new URL(request.url).searchParams.get("test") === "1";
     const options = getOptions();

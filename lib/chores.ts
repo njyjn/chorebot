@@ -26,7 +26,7 @@ export async function choresForDay(day: string): Promise<ChoreView[]> {
     orderBy: [{ sortOrder: "asc" }, { id: "asc" }],
     include: {
       completions: {
-        where: { day: { gte: lookbackStart(day), lte: day } },
+        where: { day: { gte: lookbackStart(day), lte: day }, deletedAt: null },
         select: { day: true },
       },
     },
