@@ -24,6 +24,8 @@ else
 fi
 
 export PORT="${CFG_PORT:-3002}"
+export INGRESS_PORT="${INGRESS_PORT:-3003}"
+export INTERNAL_PORT="${INTERNAL_PORT:-3100}"
 export OPTIONS_PATH="$CONFIG_PATH"
 
 # 4. Run Migrations and seed the chore list on first start
@@ -36,11 +38,11 @@ npm run prisma:seed
 (
     sleep 30
     while true; do
-        curl -fsS -X POST "http://127.0.0.1:$PORT/api/cron" >/dev/null || echo "cron tick failed"
+        curl -fsS -X POST "http://127.0.0.1:$INTERNAL_PORT/api/cron" >/dev/null || echo "cron tick failed"
         sleep 60
     done
 ) &
 
-# 6. Start App
-echo "Starting application on port $PORT..."
-exec npm start -- -p "$PORT"
+# 6. Start App: server.js runs Next.js on loopback and owns the public ports
+echo "Starting application..."
+exec node server.js

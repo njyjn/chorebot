@@ -19,18 +19,24 @@ model Task {
   intervalDays Int          @default(1)
   sortOrder    Int          @default(0)
   archived     Boolean      @default(false)
+  archivedAt   DateTime?
   createdAt    DateTime     @default(now())
   updatedAt    DateTime     @updatedAt
   completions  Completion[]
 }
 
 model Completion {
-  id          Int      @id @default(autoincrement())
+  id          Int       @id @default(autoincrement())
   taskId      Int
   // local calendar day, YYYY-MM-DD
   day         String
-  completedAt DateTime @default(now())
+  completedAt DateTime  @default(now())
   completedBy String?
+  // "kiosk" (the open checklist) or "audit" (a correction from the audit page)
+  source      String    @default("kiosk")
+  // unticks are kept for the audit trail rather than deleted
+  deletedAt   DateTime?
+  deletedBy   String?
 
   task Task @relation(fields: [taskId], references: [id], onDelete: Cascade)
 

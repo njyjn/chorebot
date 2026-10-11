@@ -1,12 +1,16 @@
 name: "ChoreBot"
-version: "0.1.0"
+version: "0.2.0"
 slug: "chorebot"
 description: "Household chore tracker with overdue alerts"
 image: ghcr.io/njyjn/chorebot
 startup: services
 boot: auto
 host_network: true
-ingress: false
+ingress: true
+ingress_port: 3003
+panel_icon: mdi:clipboard-check-outline
+panel_title: Chore Audit
+panel_admin: true
 webui: "http://[HOST]:[PORT:3002]"
 homeassistant_api: true
 map:
@@ -21,6 +25,7 @@ options:
   notify_target: ""
   slack_webhook_url: ""
   reminders_title: "TAKING CARE OF ZARA - CANNOT FORGET"
+  audit_users: []
   reminders:
     - "MUST ALWAYS WATCH ZARA"
     - "Cut all fruits like grapes, blueberry that can easily choke"
@@ -36,6 +41,8 @@ schema:
   notify_target: "str?"
   slack_webhook_url: "str?"
   reminders_title: "str?"
+  audit_users:
+    - "str"
   reminders:
     - "str"
 arch:
