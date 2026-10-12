@@ -1,5 +1,5 @@
 name: "ChoreBot"
-version: "0.2.0"
+version: "0.2.1"
 slug: "chorebot"
 description: "Household chore tracker with overdue alerts"
 image: ghcr.io/njyjn/chorebot
@@ -7,12 +7,13 @@ startup: services
 boot: auto
 host_network: true
 ingress: true
-ingress_port: 3003
+ingress_port: 0
 panel_icon: mdi:clipboard-check-outline
 panel_title: Chore Audit
 panel_admin: true
 webui: "http://[HOST]:[PORT:3002]"
 homeassistant_api: true
+hassio_api: true
 map:
   - type: share
     read_only: false

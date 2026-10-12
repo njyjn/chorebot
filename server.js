@@ -2,8 +2,9 @@
 // owns the two network ports and tells Next which one a request came in on.
 //
 //   PORT (3002)          open checklist for the guardhouse tablet
-//   INGRESS_PORT (3003)  audit pages, reached only through Home Assistant
-//                        ingress, which authenticates the user first
+//   INGRESS_PORT         audit pages, reached only through Home Assistant
+//                        ingress, which authenticates the user first. The
+//                        Supervisor assigns it (3003 outside Home Assistant)
 //
 // With host_network the ingress port is also reachable from the LAN, so the
 // audit side accepts connections from the Supervisor address alone. That is

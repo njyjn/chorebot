@@ -64,7 +64,9 @@ pointed at the add-on.
 
 How it is protected:
 
-- The audit page is served on the ingress port (3003). Because the add-on uses
+- The audit page is served on the ingress port, which the Supervisor picks
+  from the free ports on each start (logged as `Audit (ingress) on port N`),
+  so it never clashes with another service. Because the add-on uses
   `host_network`, that port is reachable from the LAN, so it only accepts
   connections from the Supervisor (`172.30.32.2`). That is what makes the
   forwarded user headers trustworthy.
@@ -128,7 +130,8 @@ npm test             # scheduling and audit rules
 ```
 
 `npm start` serves Next.js directly. To run the add-on layout locally, with
-the checklist on 3002 and the audit page on 3003, run `node server.js` after
+the checklist on 3002 and the audit page on 3003 (override with
+`INGRESS_PORT`), run `node server.js` after
 `npm run build`. Then send the headers ingress would send:
 
 ```bash
