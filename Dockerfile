@@ -15,7 +15,7 @@ RUN npm run build
 
 RUN chmod +x /app/start.sh
 
-EXPOSE 3002 3003
+EXPOSE 3002
 
 ENV NODE_ENV=production
 ENV PORT=3002

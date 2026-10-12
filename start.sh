@@ -8,6 +8,14 @@ if [ -f "$CONFIG_PATH" ]; then
     CFG_PORT=$(jq -r '.port // empty' $CONFIG_PATH)
 fi
 
+# ingress_port is 0 in config.yaml, so the Supervisor picks a free port and
+# proxies ingress to it. Ask which one; outside Home Assistant fall back to 3003.
+if [ -n "$SUPERVISOR_TOKEN" ]; then
+    CFG_INGRESS_PORT=$(curl -fsS -H "Authorization: Bearer $SUPERVISOR_TOKEN" \
+        http://supervisor/addons/self/info | jq -r '.data.ingress_port // empty')
+    [ -n "$CFG_INGRESS_PORT" ] || echo "Could not read ingress port from the Supervisor; using 3003"
+fi
+
 # 2. Prepare Database Path
 DEFAULT_DB_DIR="/share"
 DEFAULT_DB_FILE="$DEFAULT_DB_DIR/chorebot.db"
@@ -24,7 +32,7 @@ else
 fi
 
 export PORT="${CFG_PORT:-3002}"
-export INGRESS_PORT="${INGRESS_PORT:-3003}"
+export INGRESS_PORT="${CFG_INGRESS_PORT:-${INGRESS_PORT:-3003}}"
 export INTERNAL_PORT="${INTERNAL_PORT:-3100}"
 export OPTIONS_PATH="$CONFIG_PATH"
 
