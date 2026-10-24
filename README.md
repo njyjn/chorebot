@@ -14,7 +14,8 @@ Home Assistant gets a sensor plus a nightly alert listing anything left undone.
   the activity log, alert history, and chore management.
 - **Reminders banner**: the "cannot forget" list, always on screen.
 - **Alerts**: one digest per day at `alert_time` listing every overdue chore,
-  sent through a Home Assistant notify service and/or a Slack webhook.
+  sent through any of: a Home Assistant notify service, a Slack webhook, a
+  Telegram bot.
 - **Sensor**: `sensor.chorebot_outstanding` (count of chores due and not done),
   refreshed every minute and on every tick, with the list in the `outstanding`
   attribute.
@@ -44,9 +45,17 @@ Weeks run Sunday to Saturday, as on the sheet.
 | `notify_service` | | e.g. `notify.nswuco` or `notify.mobile_app_jnw_16pm` |
 | `notify_target` | | Passed as `target`, e.g. `#wucasa-chores` for the Slack notifier |
 | `slack_webhook_url` | | Optional, independent of `notify_service` |
+| `telegram_bot_token` | | Optional. Token from @BotFather. Telegram is used only when this and `telegram_chat_id` are both set |
+| `telegram_chat_id` | | Where to post: a link such as `https://t.me/c/2190525348/1` (copy any message or topic link from the group), a chat ID (e.g. `-1001234567890`) or `@channelname`. A link to a forum topic posts into that topic |
 | `reminders_title` | `TAKING CARE OF ZARA - CANNOT FORGET` | |
 | `reminders` | the five lines from the sheet | Empty list hides the banner |
 | `audit_users` | none | Home Assistant usernames (or user IDs) allowed to open Chore Audit. Empty means nobody |
+
+To set up Telegram: create a bot with @BotFather and copy its token, add the
+bot to the group, then right-click any message in the group (or the topic
+to post into) and choose **Copy Message Link**. Paste that link into
+`telegram_chat_id`. For a direct chat, send the bot a message, open
+`https://api.telegram.org/bot<token>/getUpdates` and copy `chat.id`.
 
 Times use the Home Assistant time zone, which the Supervisor passes to the add-on.
 

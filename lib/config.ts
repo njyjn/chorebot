@@ -6,6 +6,8 @@ export interface Options {
   notifyService: string;
   notifyTarget: string;
   slackWebhookUrl: string;
+  telegramBotToken: string;
+  telegramChatId: string;
   reminders: string[];
   remindersTitle: string;
 }
@@ -28,6 +30,8 @@ export function getOptions(): Options {
     notifyService: str("notify_service"),
     notifyTarget: str("notify_target"),
     slackWebhookUrl: str("slack_webhook_url", process.env.SLACK_WEBHOOK_URL || ""),
+    telegramBotToken: str("telegram_bot_token", process.env.TELEGRAM_BOT_TOKEN || ""),
+    telegramChatId: str("telegram_chat_id", process.env.TELEGRAM_CHAT_ID || ""),
     remindersTitle: str("reminders_title"),
     reminders: Array.isArray(raw.reminders) ? (raw.reminders as string[]) : [],
   };
