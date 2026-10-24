@@ -1,5 +1,5 @@
 name: "ChoreBot"
-version: "0.2.1"
+version: "0.2.2"
 slug: "chorebot"
 description: "Household chore tracker with overdue alerts"
 image: ghcr.io/njyjn/chorebot
