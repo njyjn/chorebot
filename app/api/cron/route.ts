@@ -5,6 +5,7 @@ import { getOptions } from "@/lib/config";
 import { notify } from "@/lib/homeassistant";
 import { fail } from "@/lib/http";
 import { notifySlack } from "@/lib/slack";
+import { notifyTelegram } from "@/lib/telegram";
 import { localDay } from "@/lib/schedule";
 
 export const dynamic = "force-dynamic";
@@ -47,6 +48,7 @@ export async function POST(request: Request) {
         await notify(options.notifyService, message, "ChoreBot", options.notifyTarget || undefined);
       }
       await notifySlack(options.slackWebhookUrl, message);
+      await notifyTelegram(options.telegramBotToken, options.telegramChatId, message);
     }
     if (!test) await prisma.alertLog.create({ data: { day, count: due.length } });
 

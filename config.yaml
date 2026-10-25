@@ -1,5 +1,5 @@
 name: "ChoreBot"
-version: "0.2.2"
+version: "0.3.0"
 slug: "chorebot"
 description: "Household chore tracker with overdue alerts"
 image: ghcr.io/njyjn/chorebot
@@ -25,6 +25,8 @@ options:
   notify_service: ""
   notify_target: ""
   slack_webhook_url: ""
+  telegram_bot_token: ""
+  telegram_chat_id: ""
   reminders_title: "TAKING CARE OF ZARA - CANNOT FORGET"
   audit_users: []
   reminders:
@@ -41,6 +43,8 @@ schema:
   notify_service: "str?"
   notify_target: "str?"
   slack_webhook_url: "str?"
+  telegram_bot_token: "password?"
+  telegram_chat_id: "str?"
   reminders_title: "str?"
   audit_users:
     - "str"
